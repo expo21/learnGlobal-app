@@ -133,7 +133,6 @@ const check_eligibility = async (queryObj) => {
         throw new Error("Required IELTS details.");
       }
     }
-    console.log(courseFilter);
     let response = await SchoolGeneraLInfo.aggregate([
       {
         $match:
@@ -185,6 +184,7 @@ const check_eligibility = async (queryObj) => {
 
           "aboutschool.total_student": 1,
           "school_logo.founded": 1,
+          "school_logo.logo": 1,
           program: 1,
         },
       },
@@ -195,7 +195,20 @@ const check_eligibility = async (queryObj) => {
     });
 
     if (resa.length > 0) {
-      return resa;
+      let programsLength = resa
+        .map((a) => {
+          return a.program.length;
+        })
+        .reduce((total, value) => {
+          return total + value;
+        });
+
+      return {
+        testSchoolLogo: "algoma.png",
+        programsLength: programsLength,
+        schoolLength: resa.length,
+        schools: resa,
+      };
     } else {
       throw new Error("Somethiing went wrong.");
     }

@@ -22,9 +22,11 @@ module.exports = (app) => {
 
   //check eligibility
   app.get("/v1/checkEligibility", (req, res) => {
+    console.log("sddfs");
     check_eligibility(req.query)
       .then((result) => {
-        if (Array.isArray(result)) {
+        console.log(result);
+        if (result.schoolLength > 0) {
           res.send({
             status: true,
             message: "Eligible program courses",
