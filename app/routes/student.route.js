@@ -40,13 +40,13 @@ module.exports = (app) => {
               })
               .catch((error) => {
                 console.log(error);
-                res.send({ stauts: false, message: error.message });
+                res.send({ status: false, message: error.message });
               });
           }
         })
         .catch((error) => {
           console.log(error);
-          res.send({ stauts: false, message: error.message });
+          res.send({ status: false, message: error.message });
         });
     }
   });
@@ -66,11 +66,11 @@ module.exports = (app) => {
               data: result,
             });
           } else {
-            res.send({ stauts: false, message: "Something went wrong." });
+            res.send({ status: false, message: "Something went wrong." });
           }
         })
         .catch((error) => {
-          res.send({ stauts: false, message: error.message });
+          res.send({ status: false, message: error.message });
         });
     }
   });
