@@ -40,11 +40,12 @@ module.exports = (app) => {
               res.send({
                 status: true,
                 message: "Information sent to your email. Please check",
+                data: {},
               });
             }
           })
           .catch((error) => {
-            res.send({ status: false, message: error.message });
+            res.send({ status: false, message: error.message, data: {} });
           });
       }
     }
@@ -52,9 +53,9 @@ module.exports = (app) => {
 
   //get distinct stream_id
   app.get("/streams", (req, res) => {
-    ProgramCourses.distinct("stream", { stream_id: req.query.stream_id })
+    ProgramCourses.distinct("stream")
       .then((result) => {
-        res.send(result);
+        res.send({ status: true, message: "Streams.", data: result });
       })
       .catch((error) => {
         console.log(error);

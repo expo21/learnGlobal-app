@@ -2,6 +2,7 @@ const {
   get_course_by_id,
   check_eligibility,
   check_programs,
+  get_random_courses,
 } = require("../controllers/programCourses.controller");
 
 module.exports = (app) => {
@@ -43,12 +44,42 @@ module.exports = (app) => {
 
   //check eligible program
   app.get("/v1/checkProgram", (req, res) => {
-    check_programs(req.query.school)
+    console.log(req.query);
+    check_programs(req.query)
       .then((result) => {
         res.send({ status: true, result });
       })
       .catch((error) => {
         res.send({ status: false, error });
+      });
+  });
+
+  // get random courses list
+  app.get("/v1/random_courses", (req, res) => {
+    get_random_courses()
+      .then((result) => {
+        if (result) {
+          res.send({
+            status: true,
+            message: "Random Courses list.",
+            data: result,
+          });
+        } else {
+          res.sedn({
+            status: false,
+            message: "something went wrong.",
+            data: [],
+          });
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          res.sedn({
+            status: false,
+            message: "something went wrong.",
+            data: [],
+          });
+        }
       });
   });
 };

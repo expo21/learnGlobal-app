@@ -110,7 +110,49 @@ const discover_all_schools = async () => {
   }
 };
 
+//get random schools
+const get_random_schools = async () => {
+  try {
+    let random_schools = await SchoolGeneralInfo.aggregate([
+      { $sample: { size: 10 } },
+      {
+        $lookup: {
+          from: "SchoolAbout",
+          localField: "id",
+          foreignField: "school_genral_id",
+          as: "school_about_info",
+        },
+      },
+      {
+        $lookup: {
+          from: "SchoolLogo",
+          localField: "school_about_info.id",
+          foreignField: "school_about_id",
+          as: "school_logo",
+        },
+      },
+      { $unwind: "$school_about_info" },
+      { $unwind: "$school_logo" },
+      {
+        $project: {
+          id: 1,
+          school_name: 1,
+          country: 1,
+          "school_about_info.total_student": 1,
+          "school_logo.logo": 1,
+        },
+      },
+    ]);
+    if (random_schools.length > 0) {
+      return random_schools;
+    } else {
+      return false;
+    }
+  } catch (error) {}
+};
+
 module.exports = {
   get_school_info_by_id,
   discover_all_schools,
+  get_random_schools,
 };

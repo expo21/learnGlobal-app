@@ -1,6 +1,7 @@
 const {
   get_school_info_by_id,
   discover_all_schools,
+  get_random_schools,
 } = require("../controllers/school_general_info.controller");
 
 module.exports = (app) => {
@@ -31,6 +32,33 @@ module.exports = (app) => {
       })
       .catch((error) => {
         res.send({ status: false, message: error.message });
+      });
+  });
+
+  //get random list of collage/uni.
+  app.get("/v1/top_unversities", (req, res) => {
+    get_random_schools()
+      .then((result) => {
+        if (result) {
+          res.send({
+            status: true,
+            message: "Top Universities List.",
+            data: result,
+          });
+        } else {
+          res.send({
+            status: false,
+            message: "Something went wrong. Please try later.",
+          });
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          res.send({
+            status: false,
+            message: "Something went wrong. Please try later.",
+          });
+        }
       });
   });
 };

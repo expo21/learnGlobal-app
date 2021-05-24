@@ -11,11 +11,15 @@ module.exports = (app) => {
         if (result) {
           res.send({ status: true, message: "All countries.", data: result });
         } else {
-          res.send({ status: false, message: "something went wrong." });
+          res.send({
+            status: false,
+            message: "something went wrong.",
+            data: {},
+          });
         }
       })
       .catch((error) => {
-        res.send({ status: false, message: error.message });
+        res.send({ status: false, message: error.message, data: {} });
       });
   });
 
@@ -29,10 +33,16 @@ module.exports = (app) => {
             message: `country by id ${req.params.id}`,
             data: result,
           });
+        } else {
+          res.send({
+            status: false,
+            message: "something went wrong.",
+            data: {},
+          });
         }
       })
       .catch((error) => {
-        res.send({ status: false, message: error.message });
+        res.send({ status: false, message: error.message, data: {} });
       });
   });
 };

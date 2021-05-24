@@ -173,6 +173,7 @@ const check_eligibility = async (queryObj) => {
           as: "program",
         },
       },
+
       { $unwind: "$aboutschool" },
       { $unwind: "$school_logo" },
       {
@@ -185,7 +186,7 @@ const check_eligibility = async (queryObj) => {
           "aboutschool.total_student": 1,
           "school_logo.founded": 1,
           "school_logo.logo": 1,
-          program: 1,
+          "program.id": 1,
         },
       },
     ]);
@@ -219,12 +220,45 @@ const check_eligibility = async (queryObj) => {
 };
 
 //check eligible programs
-const check_programs = async (id) => {
+const check_programs = async (query) => {
+  let programs = query.programs.split(",");
+  // console.log(programs);
   try {
-    // let response = await ProgramCourse.aggregate([
-    //   { $match: { school_id: id } },
-    // ]);
-    let response = await ProgramCourse.find({ school_id: id });
+    let response = await ProgramCourse.aggregate([
+      { $match: { id: { $in: programs } } },
+      {
+        $lookup: {
+          from: "ProgramsFees",
+          localField: "id",
+          foreignField: "programs_course_id",
+          as: "feesInfo",
+        },
+      },
+      {
+        $lookup: {
+          from: "ProgramsTime",
+          localField: "feesInfo.id",
+          foreignField: "programs_fees_id",
+          as: "course_time",
+        },
+      },
+      { $unwind: "$feesInfo" },
+      { $unwind: "$course_time" },
+      {
+        $project: {
+          id: 1,
+          course: 1,
+          duration: 1,
+          percentage_required: 1,
+          band_required: 1,
+          tuition: 1,
+          feesInfo: 1,
+          course_time: 1,
+        },
+      },
+    ]);
+    // let response = await ProgramCourse.find({ school_id: id });
+
     return response;
   } catch (error) {
     console.log(error);
@@ -232,8 +266,26 @@ const check_programs = async (id) => {
   }
 };
 
+//get random courses
+const get_random_courses = async () => {
+  try {
+    let random_courses = await ProgramCourse.aggregate([
+      { $sample: { size: 10 } },
+      { $project: {} },
+    ]);
+    if (random_courses.length > 0) {
+      return random_courses;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    conssole.log(error);
+  }
+};
+
 module.exports = {
   get_course_by_id,
   check_eligibility,
   check_programs,
+  get_random_courses,
 };
