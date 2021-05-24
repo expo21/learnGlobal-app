@@ -55,7 +55,7 @@ module.exports = (app) => {
   });
 
   // get random courses list
-  app.get("/v1/random_courses", (req, res) => {
+  app.get("/v1/trending_courses", (req, res) => {
     get_random_courses()
       .then((result) => {
         if (result) {
@@ -65,7 +65,7 @@ module.exports = (app) => {
             data: result,
           });
         } else {
-          res.sedn({
+          res.send({
             status: false,
             message: "something went wrong.",
             data: [],
@@ -74,7 +74,7 @@ module.exports = (app) => {
       })
       .catch((error) => {
         if (error) {
-          res.sedn({
+          res.send({
             status: false,
             message: "something went wrong.",
             data: [],

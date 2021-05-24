@@ -271,7 +271,44 @@ const get_random_courses = async () => {
   try {
     let random_courses = await ProgramCourse.aggregate([
       { $sample: { size: 10 } },
-      { $project: {} },
+
+      {
+        $lookup: {
+          from: "SchoolGeneralInfo",
+          localField: "school_id",
+          foreignField: "id",
+          as: "school_details",
+        },
+      },
+      {
+        $lookup: {
+          from: "ProgramsFees",
+          localField: "id",
+          foreignField: "programs_course_id",
+          as: "fees",
+        },
+      },
+      {
+        $lookup: {
+          from: "SchoolAbout",
+          localField: "school_details.id",
+          foreignField: "school_genral_id",
+          as: "school_about",
+        },
+      },
+      {
+        $project: {
+          id: 1,
+          course: 1,
+          country: 1,
+          country_logo: 1,
+          "school_details.school_name": 1,
+          "school_details.id": 1,
+          "fees.application_fees": 1,
+          "school_about.total_student": 1,
+          "school_about.int_student": 1,
+        },
+      },
     ]);
     if (random_courses.length > 0) {
       return random_courses;
@@ -279,7 +316,7 @@ const get_random_courses = async () => {
       return false;
     }
   } catch (error) {
-    conssole.log(error);
+    console.log(error);
   }
 };
 
