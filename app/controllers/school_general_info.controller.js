@@ -108,15 +108,17 @@ const discover_all_schools = async () => {
       },
     ]);
     if (schools.length > 0) {
-      const json2csvParser = new Json2csvParser({ header: true });
-      const csvData = json2csvParser.parse(schools);
-      fs.writeFile("mongodb_fs.csv", csvData, function (error) {
-        if (error) throw error;
-        console.log("Write to bezkoder_mongodb_fs.csv successfully!");
-      });
+      // const json2csvParser = new Json2csvParser({ header: true });
+      // const csvData = json2csvParser.parse(schools);
+      // fs.writeFile("mongodb_fs.csv", csvData, function (error) {
+      //   if (error) throw error;
+      //   console.log("Write to bezkoder_mongodb_fs.csv successfully!");
+      // });
+
       return schools;
     } else false;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };

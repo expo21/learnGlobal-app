@@ -61,7 +61,7 @@ module.exports = (app) => {
         if (result) {
           res.send({
             status: true,
-            message: "Random Courses list.",
+            message: "Trending Courses list.",
             data: result,
           });
         } else {

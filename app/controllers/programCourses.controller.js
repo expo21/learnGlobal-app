@@ -306,6 +306,8 @@ const get_random_courses = async () => {
           course: 1,
           country: 1,
           country_logo: 1,
+          "school_details.country": 1,
+          "school_details.country_logo": 1,
           "school_details.school_name": 1,
           "school_details.id": 1,
           "fees.application_fees": 1,

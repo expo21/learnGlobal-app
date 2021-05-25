@@ -14,6 +14,19 @@
 // }
 
 module.exports = {
-  URL:
-    "mongodb+srv://teamwork:teamwork@learnglobal.m7mhj.mongodb.net/learnglobal?retryWrites=true&w=majority",
+  URL: "mongodb+srv://teamwork:teamwork@learnglobal.m7mhj.mongodb.net/learnglobal?retryWrites=true&w=majority",
 };
+
+/* 
+
+
+
+
+we need to update the 
+
+
+
+
+
+
+*/
