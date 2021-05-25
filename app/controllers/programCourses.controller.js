@@ -296,6 +296,10 @@ const get_random_courses = async () => {
           as: "school_about",
         },
       },
+      { $unwind: "$fees" },
+      { $unwind: "$school_details" },
+      { $unwind: "$school_about" },
+
       {
         $project: {
           id: 1,
