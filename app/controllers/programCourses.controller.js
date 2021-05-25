@@ -296,9 +296,18 @@ const get_random_courses = async () => {
           as: "school_about",
         },
       },
+      {
+        $lookup: {
+          from: "SchoolLogo",
+          localField: "school_details.id",
+          foreignField: "school_about_id",
+          as: "school_logo",
+        },
+      },
       { $unwind: "$fees" },
       { $unwind: "$school_details" },
       { $unwind: "$school_about" },
+      { $unwind: "$school_logo" },
 
       {
         $project: {
@@ -313,6 +322,7 @@ const get_random_courses = async () => {
           "fees.application_fees": 1,
           "school_about.total_student": 1,
           "school_about.int_student": 1,
+          "school_logo.logo": 1,
         },
       },
     ]);
