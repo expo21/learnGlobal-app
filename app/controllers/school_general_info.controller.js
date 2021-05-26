@@ -1,7 +1,5 @@
 const SchoolGeneralInfo = require("../models/school_general_info.model");
 const SchoolAbout = require("../models/school_about.model");
-const Json2csvParser = require("json2csv").Parser;
-const fs = require("fs");
 
 // get school info by id
 const get_school_info_by_id = async (id) => {
