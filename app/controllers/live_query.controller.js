@@ -6,17 +6,18 @@ const create_live_query = async (dataObj) => {
     let newLiveQuery = new LiveQuery(dataObj);
     let savedLiveQuery = await newLiveQuery.save();
     if (savedLiveQuery) {
-      let info = await transporter.sendMail({
-        from: "rajat.expinator21@gmail.com",
-        to: savedLiveQuery.email,
-        subject: "test email",
-        text: "Test Email.",
-        html: `<b>Hey there! </b><br>Test email.<br/>`,
-      });
-      if (info) {
-        return savedLiveQuery;
-      }
-    }
+      // let info = await transporter.sendMail({
+      //   from: "rajat.expinator21@gmail.com",
+      //   to: savedLiveQuery.email,
+      //   subject: "test email",
+      //   text: "Test Email.",
+      //   html: `<b>Hey there! </b><br>Test email.<br/>`,
+      // });
+      // if (info) {
+      //   return savedLiveQuery;
+      // }
+      return true;
+    } else return false;
   } catch (error) {
     console.log(error);
     throw error;
