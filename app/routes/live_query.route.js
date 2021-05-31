@@ -21,15 +21,16 @@ module.exports = (app) => {
         .withMessage("Phone number is required.")
         .isNumeric()
         .withMessage("Phone number should be in number."),
-      check("term")
-        .not()
-        .isEmpty()
-        .withMessage("You must accept the terms and conditions."),
+      check("query").not().isEmpty().withMessage("Required."),
     ],
     (req, res) => {
       let errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.send({ status: false, error: errors.mapped() });
+        return res.send({
+          status: false,
+          message: "Error.",
+          data: errors.mapped(),
+        });
       } else {
         let dataObj = req.body;
         liveQuery

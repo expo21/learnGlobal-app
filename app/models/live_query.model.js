@@ -6,7 +6,7 @@ const LiveQuerySchema = mongoose.Schema(
     last_name: { type: String },
     email: { type: String },
     mobile: { type: Number },
-    destination: { type: String },
+    query: { type: String },
   },
   {
     collection: "LiveQuery",

@@ -51,7 +51,7 @@ const getCountryById = async (id) => {
     if (!country) {
       throw new Error("Page not Found");
     } else {
-      return country;
+      return country[0];
     }
   } catch (error) {
     throw error;

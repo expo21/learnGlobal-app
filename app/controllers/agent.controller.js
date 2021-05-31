@@ -27,8 +27,7 @@ const register_agent = async (dataObj) => {
     });
     // let newAgent = new AgentInfo(dataObj);
     // let savedAgent = await newAgent.save();
-    console.log(info);
-    console.log(dataObj);
+
     return info;
     // return savedAgent;
   } catch (error) {
