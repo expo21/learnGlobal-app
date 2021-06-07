@@ -72,7 +72,12 @@ const check_eligibility = async (queryObj) => {
       stream_id,
       exam_type,
     } = queryObj;
-    console.log(writing);
+    console.log(program_level);
+    if (program_level >= 5) {
+      program_level = "2";
+    } else {
+      program_level = "1";
+    }
     let streams =
       stream_id === "All"
         ? await ProgramCourse.distinct("stream_id")

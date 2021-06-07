@@ -53,7 +53,7 @@ module.exports = (app) => {
   );
 
   //get distinct stream_id
-  app.get("/streams", (req, res) => {
+  app.get("/v1/streams", (req, res) => {
     ProgramCourses.distinct("stream")
       .then((result) => {
         res.send({ status: true, message: "Streams.", data: result });

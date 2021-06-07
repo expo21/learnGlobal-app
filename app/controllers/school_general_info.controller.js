@@ -3,6 +3,7 @@ const SchoolAbout = require("../models/school_about.model");
 
 // get school info by id
 const get_school_info_by_id = async (id) => {
+  console.log(id);
   try {
     let school_info = await SchoolGeneralInfo.aggregate([
       { $match: { id } },
@@ -64,6 +65,7 @@ const get_school_info_by_id = async (id) => {
         },
       },
     ]);
+    console.log(school_info);
     return school_info[0];
   } catch (error) {
     console.log(error);
